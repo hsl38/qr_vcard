@@ -1,11 +1,5 @@
 '''
-vcard로 qr code 이미지를 만든다.
-streamlit을 사용한다. 
-
-
-TODO:
-- auto-scale checkbox를 추가한다.
-
+스마트폰에서 스캔하면 연락처에 데이터가 입려되는 QR 코드 명함 이미지를 만든다.
 '''
 
 
@@ -303,10 +297,11 @@ if __name__ == '__main__':
         set_user_inputs(user_inputs)
         
 
-    st.title('VCARD QR 코드 생성기')
-    st.write('종이 명함 대신 QR 코드 명함 사용으로 환경 보호에 도움이 되면 좋겠습니다.')
-    st.write('VCARD 정보를 입력하고 "QR 코드 생성" 버튼을 클릭하세요.')
-    st.write('사용법 상세세: https://github.com/hsl38/qr_vcard')
+    st.title('QR 코드 명함함 생성기')
+    st.write('- 스마트폰에서 스캔하면 연락처 앱에 데이터가 입려되는 QR 코드 명함 이미지를 만듭니다.')
+    st.write('- 종이 명함 대신 QR 코드 명함 사용으로 환경 보호에 도움이 되면 좋겠습니다.')
+    st.write('- 간략 사용법: 명함 데이터를 입력하고 "QR 코드 생성" 버튼을 클릭하세요.')
+    st.write('- 상세 사용법: https://github.com/hsl38/qr_vcard')
     st.divider()
 
 

@@ -15,10 +15,10 @@
 - 명함을 건네야 할 때에 상대가 스캔할 수 있도록 스마프폰 화면에 QR 코드 명함을 띄워주세요.
 ### QR 코드 명함 받기
 - 스마트폰 카메라로 QR 코드를 스캔하면 아래 그림의 노란색 "고양이대표" 처럼 화면에 명함 이름의 링크가 뜹니다.
-    - ![alt text](doc/qr_code_scanning.PNG)
-- 링크를 터치하면 아래 그림들처럼 VCARD 데이터가 입력된 상태로 스마트폰의 연락처 앱이 열립니다.
-    - ![alt text](doc/iphone_contact_screen_1.PNG)
-    - ![alt text](doc/iphone_contact_screen_2.PNG)
+    - ![alt text](doc/qr_code_scanning.PNG){: width="50%" height="50%"}
+- 링크를 터치하면 아래 그림들처럼 데이터가 입력된 상태로 스마트폰의 연락처 앱이 열립니다.
+    - ![alt text](doc/iphone_contact_screen_1.PNG){: width="50%" height="50%"}
+    - ![alt text](doc/iphone_contact_screen_2.PNG){: width="50%" height="50%"}
 - "새로운 연락처 등록", "기존의 연락처에 추가"를 터치하여 명함을 연락처에 저장합니다.
 
 
