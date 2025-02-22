@@ -280,13 +280,12 @@ def process_button_create_qr_code_clicked():
         img_byte_arr = img_byte_arr.getvalue()
 
         # qr 코드 이미지 다운로드
-        st.download_button(
-            label='다운로드',
+        button_download_qr_img_clicked = st.download_button(
+            label='다운로드 QR 코드 이미지',
             data=img_byte_arr,
             file_name=f'{formatted_name}_{company}_{type_box}_{size_box}_{thickness_border_in_box}_{side_img_inner}_{thickness_padding}_{x_img_inner}_{y_img_inner}.png',
             mime='image/png',
         )
-
 
 
 if __name__ == '__main__':
@@ -297,16 +296,22 @@ if __name__ == '__main__':
     if 'user_inputs' not in st.session_state:
         user_inputs = load_inputs_from_json(dir_json/'default_user_inputs.json')
         set_user_inputs(user_inputs)
-        st.success('Inputs loaded successfully!')
+        # st.success('Inputs loaded successfully!')
         st.session_state.user_inputs = user_inputs
     else:
         user_inputs = st.session_state.user_inputs
         set_user_inputs(user_inputs)
         
 
+    st.title('VCARD QR 코드 생성기')
+    st.write('종이 명함 대신 QR 코드 명함 사용으로 환경 보호에 도움이 되면 좋겠습니다.')
+    st.write('VCARD 정보를 입력하고 "QR 코드 생성" 버튼을 클릭하세요.')
+    st.write('사용법 상세세: https://github.com/hsl38/qr_vcard')
+    st.divider()
+
+
     # 페이지 레이아웃
     col_vcard, col_para, col_qr_code = st.columns([5, 2, 3])
-
 
     # vcard 정보 입력
     with col_vcard:
@@ -361,6 +366,8 @@ if __name__ == '__main__':
         tel_mobile = col_tel[0].text_input('모바일 전화번호', tel_mobile)
         tel_office = col_tel[1].text_input('사무실 전화번호', tel_office)
 
+        # note
+        note = st.text_area('노트', note)
 
         # vcard
         vcard = f'''BEGIN:VCARD
@@ -423,10 +430,10 @@ END:VCARD'''
 
 
         with st.form('qr_code_para'):
-            button_create_qr_code_clicked = st.form_submit_button('QR 코드 생성')
+            button_create_qr_code_clicked = st.form_submit_button('QR 코드 생성', type='primary', use_container_width=True)
 
             # qr code 종류
-            types_box = ['rounded square', 'vertical', 'normal']
+            types_box = ['rounded square', 'vertical', 'standard']
             type_box = st.selectbox('QR 코드 종류', types_box, index=1)
 
             # qr code 박스(픽셀,  도트) 크기
