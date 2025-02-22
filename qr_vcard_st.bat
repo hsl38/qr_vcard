@@ -1,0 +1,1 @@
+streamlit run qr_vcard_st.py
