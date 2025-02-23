@@ -23,7 +23,7 @@ st.set_page_config(
 )
 
 
-def generate_inner_img_masked(path_img_inner, limit_side_img_inner=64, thickness_padding=2):
+def generate_inner_img_masked(path_img_inner, limit_side_img_inner=64, thickness_frame=2):
     '''
     Create an inner image with a circular mask for center of QR code.
     '''
@@ -61,7 +61,7 @@ def generate_inner_img_masked(path_img_inner, limit_side_img_inner=64, thickness
     )
 
     # expand image with white background and padding
-    img_inner = ImageOps.expand(img_inner, border=thickness_padding, fill='white')
+    img_inner = ImageOps.expand(img_inner, border=thickness_frame, fill='white')
 
     return img_inner
 
@@ -98,7 +98,7 @@ def create_img_qr_code(
 def create_img_inner(
         path_img_inner,
         side_img_inner,
-        thickness_padding,
+        thickness_frame,
         apply_mask=True,
     ):
 
@@ -140,7 +140,7 @@ def create_img_inner(
     )
 
     # expand image with white background and padding
-    img_inner = ImageOps.expand(img_inner, border=thickness_padding, fill='white')
+    img_inner = ImageOps.expand(img_inner, border=thickness_frame, fill='white')
 
     return img_inner
 
@@ -183,7 +183,7 @@ def get_user_inputs():
         'size_box': size_box,
         'thickness_border_in_box': thickness_border_in_box,
         'side_img_inner': side_img_inner,
-        'thickness_padding': thickness_padding,
+        'thickness_frame': thickness_frame,
         'x_img_inner': x_img_inner,
         'y_img_inner': y_img_inner,
     }
@@ -194,7 +194,7 @@ def set_user_inputs(data):
     global type_url_1, url_1, type_url_2, url_2, type_url_3, url_3
     global type_email_1, email_1, type_email_2, email_2, type_email_3, email_3
     global tel_mobile, tel_office, note, type_box, size_box, thickness_border_in_box
-    global side_img_inner, thickness_padding, x_img_inner, y_img_inner
+    global side_img_inner, thickness_frame, x_img_inner, y_img_inner
 
     formatted_name = data['formatted_name']
     name_prefix = data['name_prefix']
@@ -226,7 +226,7 @@ def set_user_inputs(data):
     size_box = data['size_box']
     thickness_border_in_box = data['thickness_border_in_box']
     side_img_inner = data['side_img_inner']
-    thickness_padding = data['thickness_padding']
+    thickness_frame = data['thickness_frame']
     x_img_inner = data['x_img_inner']
     y_img_inner = data['y_img_inner']
 
@@ -247,13 +247,13 @@ def process_button_create_qr_code_clicked():
         img_inner = create_img_inner(
             path_img_inner=path_img_inner,
             side_img_inner=side_img_inner,
-            thickness_padding=thickness_padding,
+            thickness_frame=thickness_frame,
             apply_mask=apply_mask,
         )
 
         # qr 코드 이미지에 inner image를 넣는다.
-        x_pos = img_qr_code.width - side_img_inner - thickness_padding - x_img_inner
-        y_pos = img_qr_code.height - side_img_inner - thickness_padding - y_img_inner
+        x_pos = img_qr_code.width - side_img_inner - thickness_frame - x_img_inner
+        y_pos = img_qr_code.height - side_img_inner - thickness_frame - y_img_inner
 
         img_qr_code.paste(
             img_inner,
@@ -277,7 +277,7 @@ def process_button_create_qr_code_clicked():
         button_download_qr_img_clicked = st.download_button(
             label='다운로드 QR 코드 이미지',
             data=img_byte_arr,
-            file_name=f'{formatted_name}_{company}_{type_box}_{size_box}_{thickness_border_in_box}_{side_img_inner}_{thickness_padding}_{x_img_inner}_{y_img_inner}.png',
+            file_name=f'{formatted_name}_{company}_{type_box}_{size_box}_{thickness_border_in_box}_{side_img_inner}_{thickness_frame}_{x_img_inner}_{y_img_inner}.png',
             mime='image/png',
         )
 
@@ -377,7 +377,7 @@ EMAIL;TYPE={type_email_1}:{email_1}
 EMAIL;TYPE={type_email_2}:{email_2}
 EMAIL;TYPE={type_email_3}:{email_3}
 TEL;TYPE=mobile,pref:{tel_mobile}
-TEL;TYPE=사무실:{tel_office}
+TEL;TYPE=office:{tel_office}
 NOTE:{note}
 END:VCARD'''
     
@@ -405,7 +405,7 @@ END:VCARD'''
 
                 set_user_inputs(user_inputs)
                 st.session_state.user_inputs = user_inputs
-                st.success('QR 코드 생성 버튼을 클릭하면 입력 데이터가 적용됩니다.')
+                st.success('QR 코드 생성 버튼을 클릭하면 파일의 데이터가 적용됩니다.')
 
 
     # qr code 생성 파라미터 입력
@@ -421,7 +421,7 @@ END:VCARD'''
 
                 width_img_inner, height_img_inner = img_inner.size
 
-                st.text(f'이미지 크기기 = {width_img_inner} x {height_img_inner}')
+                st.text(f'이미지 크기 = {width_img_inner} x {height_img_inner}')
 
 
         with st.form('qr_code_para'):
@@ -435,7 +435,7 @@ END:VCARD'''
             size_box = st.number_input('박스 크기', value=4, min_value=1, max_value=8)
 
             # qr code 테두리 굵기. 박스 크기의 몇 배로 할 것인가.
-            thickness_border_in_box = st.number_input('테두리[박스 크기]', value=4, min_value=1, max_value=8)
+            thickness_border_in_box = st.number_input('QR 코드 테두리[박스 크기]', value=4, min_value=1, max_value=8)
 
             # inner image 크기
             # inner image가 있을 때만 입력할 수 있다.
@@ -444,7 +444,7 @@ END:VCARD'''
             # inner image는 오른쪽 아래에 위치한다.
             if path_img_inner:
                 side_img_inner = st.number_input('이미지 크기', value=size_box * 16, min_value=32, max_value=128)
-                thickness_padding = st.number_input('이미지 테두리', value=2, min_value=0, max_value=8)
+                thickness_frame = st.number_input('이미지 테두리', value=2, min_value=0, max_value=8)
         
                 x_img_inner = st.number_input('이미지 수평 이동', value=size_box * 6, min_value=0, max_value=640, step=size_box)
                 y_img_inner = st.number_input('이미지 수직 이동', value=size_box * 6, min_value=0, max_value=640, step=size_box)
@@ -452,7 +452,7 @@ END:VCARD'''
                 apply_mask = st.checkbox('이미지 마스크 적용', value=True)
             else:
                 side_img_inner = 0
-                thickness_padding = 0
+                thickness_frame = 0
                 x_img_inner = 0
                 y_img_inner = 0
                 apply_mask = False
