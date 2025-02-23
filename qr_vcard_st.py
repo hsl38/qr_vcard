@@ -362,7 +362,7 @@ if __name__ == '__main__':
         tel_office = col_tel[1].text_input('사무실 전화번호', tel_office)
 
         # note
-        note = st.text_area('노트 (줄바꿈 없이 한 줄로만 입력하세요.)', note, help='[주의] 줄바꿈을 하면 첫 줄만 QR 코드에 포함됩니다.')
+        note = st.text_area('노트 (줄바꿈 없이 한 줄로 입력하세요.)', note, help='[주의] 줄바꿈을 하면 첫 줄만 QR 코드에 포함됩니다.')
 
         # vcard
         vcard = f'''BEGIN:VCARD
