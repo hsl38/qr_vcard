@@ -25,7 +25,6 @@ st.set_page_config(
 )
 
 
-
 def create_img_qr_code(
         type_box,
         size_box,
@@ -289,8 +288,8 @@ if __name__ == '__main__':
         set_user_inputs(user_inputs)
 
     st.title(f'QR 코드 명함 생성기 {release_version}')
-    st.write('- 스마트폰에서 스캔하면 연락처 앱에 데이터가 자동으로 입력되는 QR 코드 명함 이미지를 만듭니다.')
-    st.write('- 종이 명함 대신 QR 코드 명함 사용으로 환경 보호에 도움이 되면 좋겠습니다.')
+    st.write('- 스마트폰 카메라로 QR 코드를 스캔하면 연락처 앱에 데이터가 자동으로 입력되는 QR 코드 이미지를 만듭니다.')
+    st.write('- 종이 명함 대신 사용되어 환경에 도움이 되면 좋겠습니다.')
     st.write('- 간략 사용법: 명함 데이터를 입력하고 "QR 코드 생성" 버튼을 클릭하세요. 이미지를 다운로드 받으세요.')
     st.write('- 상세 사용법: https://github.com/hsl38/qr_vcard')
     st.divider()
@@ -456,15 +455,11 @@ if __name__ == '__main__':
         else:
             path_img_inner = None
 
-
         if use_inner_image and (img_inner is not None):
             with st.expander('이미지 사용법', expanded=(img_inner is not None)):
                 st.write('이미지는 오른쪽 아래에 위치합니다.')
                 st.write('마스크를 적용하면 원형으로 잘립니다.')
                 st.write('이미지 크기가 너무 크면 QR 코드가 읽히지 않을 수 있습니다.')
-
-
-
 
         with st.form('qr_code_para'):
             button_create_qr_code_clicked = st.form_submit_button('QR 코드 생성', type='primary', use_container_width=True)
