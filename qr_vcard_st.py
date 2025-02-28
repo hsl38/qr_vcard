@@ -15,7 +15,7 @@ from qrcode.image.styles.colormasks import RadialGradiantColorMask
 import io
 
 
-release_version = '2.0'
+release_version = '2.1'
 
 # 페이지 설정
 st.set_page_config(
@@ -142,6 +142,8 @@ def get_user_inputs():
         'email_2': email_2,
         'type_email_3': type_email_3,
         'email_3': email_3,
+        'type_email_4': type_email_4,
+        'email_4': email_4,
         
         'tel_mobile': tel_mobile,
         'tel_office': tel_office,
@@ -158,6 +160,7 @@ def get_user_inputs():
         'path_img_inner': path_img_inner if isinstance(path_img_inner, str) else None,
     }
     return inputs
+
 
 def set_user_inputs(data):
     global formatted_name, name_prefix, name_family, name_middle, name_given, name_suffix, company
