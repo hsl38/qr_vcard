@@ -15,9 +15,11 @@ from qrcode.image.styles.colormasks import RadialGradiantColorMask
 import io
 
 
+release_version = '2.0'
+
 # 페이지 설정
 st.set_page_config(
-    page_title='QR',
+    page_title=f'QR {release_version}',
     page_icon='🔳',
     layout='wide',
 )
@@ -283,7 +285,7 @@ if __name__ == '__main__':
         user_inputs = st.session_state.user_inputs
         set_user_inputs(user_inputs)
 
-    st.title('QR 코드 명함 생성기')
+    st.title(f'QR 코드 명함 생성기 {release_version}')
     st.write('- 스마트폰에서 스캔하면 연락처 앱에 데이터가 자동으로 입력되는 QR 코드 명함 이미지를 만듭니다.')
     st.write('- 종이 명함 대신 QR 코드 명함 사용으로 환경 보호에 도움이 되면 좋겠습니다.')
     st.write('- 간략 사용법: 명함 데이터를 입력하고 "QR 코드 생성" 버튼을 클릭하세요. 이미지를 다운로드 받으세요.')
