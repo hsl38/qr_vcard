@@ -23,48 +23,6 @@ st.set_page_config(
 )
 
 
-# def generate_inner_img_masked(path_img_inner, limit_side_img_inner=64, thickness_frame=2):
-#     '''
-#     Create an inner image with a circular mask for center of QR code.
-#     '''
-    
-#     img_inner = Image.open(path_img_inner).convert('RGBA')
-#     width_img_inner, height_img_inner = img_inner.size
-
-#     # resize the inner image if it is too large
-#     side_longer_img_inner = max(width_img_inner, height_img_inner)
-#     if side_longer_img_inner > limit_side_img_inner:
-#         scale = limit_side_img_inner / side_longer_img_inner
-#         img_inner = img_inner.resize((int(width_img_inner * scale), int(height_img_inner * scale)))
-#         width_img_inner, height_img_inner = img_inner.size
-
-#     # create a circular mask for the inner image
-#     mask = Image.new('L', (width_img_inner, height_img_inner), 0)
-#     draw = ImageDraw.Draw(mask)
-#     circle_center = (width_img_inner // 2, height_img_inner // 2)
-#     circle_radius = min(width_img_inner, height_img_inner) // 2
-#     draw.ellipse(
-#         (
-#             circle_center[0] - circle_radius,
-#             circle_center[1] - circle_radius,
-#             circle_center[0] + circle_radius,
-#             circle_center[1] + circle_radius,
-#         ),
-#         fill=255,
-#     )
-
-#     # apply the circular mask to the inner image
-#     img_inner = Image.composite(
-#         img_inner,
-#         Image.new('RGBA', img_inner.size, (255, 255, 255, 255)),
-#         mask
-#     )
-
-#     # expand image with white background and padding
-#     img_inner = ImageOps.expand(img_inner, border=thickness_frame, fill='white')
-
-#     return img_inner
-
 
 def create_img_qr_code(
         type_box,
@@ -232,7 +190,7 @@ def set_user_inputs(data):
     type_email_3 = data['type_email_3']
     email_3 = data['email_3']
     type_email_4 = data['type_email_4']
-    email_4 = data['type_email_4']
+    email_4 = data['email_4']
     
     tel_mobile = data['tel_mobile']
     tel_office = data['tel_office']
