@@ -232,7 +232,7 @@ def set_user_inputs(data):
     type_email_3 = data['type_email_3']
     email_3 = data['email_3']
     type_email_4 = data['type_email_4']
-    email_4 = data['email_4']
+    email_4 = data['type_email_4']
     
     tel_mobile = data['tel_mobile']
     tel_office = data['tel_office']
@@ -301,15 +301,25 @@ def process_button_create_qr_code_clicked():
 
 
 if __name__ == '__main__':
+    # Initialize path_img_inner and img_inner to None to prevent reference errors
+    path_img_inner = None
+    img_inner = None
+    apply_mask = False
 
     # default user inputs
     dir_json = Path('json_user_inputs')
     dir_json.mkdir(exist_ok=True)
 
+    # Check if this is the first run
+    if 'initialized' not in st.session_state:
+        st.session_state.initialized = True
+        first_run = True
+    else:
+        first_run = False
+
     if 'user_inputs' not in st.session_state:
         user_inputs = load_inputs_from_json(dir_json/'default_user_inputs.json')
         set_user_inputs(user_inputs)
-        # st.success('Inputs loaded successfully!')
         st.session_state.user_inputs = user_inputs
     else:
         user_inputs = st.session_state.user_inputs
@@ -464,7 +474,7 @@ if __name__ == '__main__':
     with col_para:
 
         # inner image
-        use_inner_image = st.checkbox('Inner Image 사용', value=False)
+        use_inner_image = st.checkbox('Inner Image 사용', value=True)
 
         if use_inner_image:
             path_img_inner = st.file_uploader('QR 코드에 넣을 이미지', type=['png', 'jpg', 'jpeg'], key='inner_img', disabled=(not use_inner_image))
@@ -529,5 +539,19 @@ if __name__ == '__main__':
 
     # qr 코드 생성
     if button_create_qr_code_clicked:
+        process_button_create_qr_code_clicked()
+
+    # 자동 QR 코드 생성 (처음 실행할 때만)
+    if first_run:
+        # Initialize default settings for QR code
+        use_inner_image = True
+        side_img_inner = 64
+        thickness_frame = 2
+        x_img_inner = 24
+        y_img_inner = 24
+        apply_mask = True
+        path_img_inner = 'img_inner/cat.png'
+        
+        # Generate QR code on first run
         process_button_create_qr_code_clicked()
 
