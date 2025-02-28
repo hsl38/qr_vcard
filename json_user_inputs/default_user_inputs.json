@@ -12,12 +12,16 @@
     "url_2": "https://github.com/hsl38/qr_vcard",
     "type_url_3": "웹앱",
     "url_3": "https://qr-vcard.streamlit.app/",
+    "type_url_4": "",
+    "url_4": "",
     "type_email_1": "고양이코드",
     "email_1": "cat1@catcode.co.kr",
     "type_email_2": "문의",
     "email_2": "q@catcode.co.kr",
     "type_email_3": "개인",
     "email_3": "dog9@my.personal.email",
+    "type_email_4": "",
+    "email_4": "",
     "tel_mobile": "+82-10-5678-9012",
     "tel_office": "",
     "note": "환경, 에너지, 자동차, SDV, 통신, 사이버 보안, AI aided 코딩에 관심이 많습니다.",
@@ -27,5 +31,6 @@
     "side_img_inner": 64,
     "thickness_frame": 2,
     "x_img_inner": 0,
-    "y_img_inner": 0
+    "y_img_inner": 0,
+    "path_img_inner": ".\\img_inner\\cat.png"
 }

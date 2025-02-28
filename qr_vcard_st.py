@@ -23,47 +23,47 @@ st.set_page_config(
 )
 
 
-def generate_inner_img_masked(path_img_inner, limit_side_img_inner=64, thickness_frame=2):
-    '''
-    Create an inner image with a circular mask for center of QR code.
-    '''
+# def generate_inner_img_masked(path_img_inner, limit_side_img_inner=64, thickness_frame=2):
+#     '''
+#     Create an inner image with a circular mask for center of QR code.
+#     '''
     
-    img_inner = Image.open(path_img_inner).convert('RGBA')
-    width_img_inner, height_img_inner = img_inner.size
+#     img_inner = Image.open(path_img_inner).convert('RGBA')
+#     width_img_inner, height_img_inner = img_inner.size
 
-    # resize the inner image if it is too large
-    side_longer_img_inner = max(width_img_inner, height_img_inner)
-    if side_longer_img_inner > limit_side_img_inner:
-        scale = limit_side_img_inner / side_longer_img_inner
-        img_inner = img_inner.resize((int(width_img_inner * scale), int(height_img_inner * scale)))
-        width_img_inner, height_img_inner = img_inner.size
+#     # resize the inner image if it is too large
+#     side_longer_img_inner = max(width_img_inner, height_img_inner)
+#     if side_longer_img_inner > limit_side_img_inner:
+#         scale = limit_side_img_inner / side_longer_img_inner
+#         img_inner = img_inner.resize((int(width_img_inner * scale), int(height_img_inner * scale)))
+#         width_img_inner, height_img_inner = img_inner.size
 
-    # create a circular mask for the inner image
-    mask = Image.new('L', (width_img_inner, height_img_inner), 0)
-    draw = ImageDraw.Draw(mask)
-    circle_center = (width_img_inner // 2, height_img_inner // 2)
-    circle_radius = min(width_img_inner, height_img_inner) // 2
-    draw.ellipse(
-        (
-            circle_center[0] - circle_radius,
-            circle_center[1] - circle_radius,
-            circle_center[0] + circle_radius,
-            circle_center[1] + circle_radius,
-        ),
-        fill=255,
-    )
+#     # create a circular mask for the inner image
+#     mask = Image.new('L', (width_img_inner, height_img_inner), 0)
+#     draw = ImageDraw.Draw(mask)
+#     circle_center = (width_img_inner // 2, height_img_inner // 2)
+#     circle_radius = min(width_img_inner, height_img_inner) // 2
+#     draw.ellipse(
+#         (
+#             circle_center[0] - circle_radius,
+#             circle_center[1] - circle_radius,
+#             circle_center[0] + circle_radius,
+#             circle_center[1] + circle_radius,
+#         ),
+#         fill=255,
+#     )
 
-    # apply the circular mask to the inner image
-    img_inner = Image.composite(
-        img_inner,
-        Image.new('RGBA', img_inner.size, (255, 255, 255, 255)),
-        mask
-    )
+#     # apply the circular mask to the inner image
+#     img_inner = Image.composite(
+#         img_inner,
+#         Image.new('RGBA', img_inner.size, (255, 255, 255, 255)),
+#         mask
+#     )
 
-    # expand image with white background and padding
-    img_inner = ImageOps.expand(img_inner, border=thickness_frame, fill='white')
+#     # expand image with white background and padding
+#     img_inner = ImageOps.expand(img_inner, border=thickness_frame, fill='white')
 
-    return img_inner
+#     return img_inner
 
 
 def create_img_qr_code(
@@ -158,27 +158,36 @@ def load_inputs_from_json(file_path):
 def get_user_inputs():
     inputs = {
         'formatted_name': formatted_name,
+
         'name_prefix': name_prefix,
         'name_family': name_family,
         'name_middle': name_middle,
         'name_given': name_given,
         'name_suffix': name_suffix,
+        
         'company': company,
+        
         'type_url_1': type_url_1,
         'url_1': url_1,
         'type_url_2': type_url_2,
         'url_2': url_2,
         'type_url_3': type_url_3,
         'url_3': url_3,
+        'type_url_4': type_url_4,
+        'url_4': url_4,
+        
         'type_email_1': type_email_1,
         'email_1': email_1,
         'type_email_2': type_email_2,
         'email_2': email_2,
         'type_email_3': type_email_3,
         'email_3': email_3,
+        
         'tel_mobile': tel_mobile,
         'tel_office': tel_office,
+        
         'note': note,
+        
         'type_box': type_box,
         'size_box': size_box,
         'thickness_border_in_box': thickness_border_in_box,
@@ -186,17 +195,19 @@ def get_user_inputs():
         'thickness_frame': thickness_frame,
         'x_img_inner': x_img_inner,
         'y_img_inner': y_img_inner,
+        'path_img_inner': path_img_inner if isinstance(path_img_inner, str) else None,
     }
     return inputs
 
 def set_user_inputs(data):
     global formatted_name, name_prefix, name_family, name_middle, name_given, name_suffix, company
-    global type_url_1, url_1, type_url_2, url_2, type_url_3, url_3
-    global type_email_1, email_1, type_email_2, email_2, type_email_3, email_3
+    global type_url_1, url_1, type_url_2, url_2, type_url_3, url_3, type_url_4, url_4
+    global type_email_1, email_1, type_email_2, email_2, type_email_3, email_3, type_email_4, email_4
     global tel_mobile, tel_office, note, type_box, size_box, thickness_border_in_box
-    global side_img_inner, thickness_frame, x_img_inner, y_img_inner
+    global side_img_inner, thickness_frame, x_img_inner, y_img_inner, path_img_inner
 
     formatted_name = data['formatted_name']
+
     name_prefix = data['name_prefix']
     name_family = data['name_family']
     name_middle = data['name_middle']
@@ -211,6 +222,8 @@ def set_user_inputs(data):
     url_2 = data['url_2']
     type_url_3 = data['type_url_3']
     url_3 = data['url_3']
+    type_url_4 = data['type_url_4']
+    url_4 = data['url_4']
     
     type_email_1 = data['type_email_1']
     email_1 = data['email_1']
@@ -218,10 +231,14 @@ def set_user_inputs(data):
     email_2 = data['email_2']
     type_email_3 = data['type_email_3']
     email_3 = data['email_3']
+    type_email_4 = data['type_email_4']
+    email_4 = data['email_4']
     
     tel_mobile = data['tel_mobile']
     tel_office = data['tel_office']
+
     note = data['note']
+    
     type_box = data['type_box']
     size_box = data['size_box']
     thickness_border_in_box = data['thickness_border_in_box']
@@ -229,6 +246,7 @@ def set_user_inputs(data):
     thickness_frame = data['thickness_frame']
     x_img_inner = data['x_img_inner']
     y_img_inner = data['y_img_inner']
+    path_img_inner = data['path_img_inner']
 
 
 def process_button_create_qr_code_clicked():
@@ -242,7 +260,7 @@ def process_button_create_qr_code_clicked():
 
 
     # inner image가 있을 때만 실행한다.
-    if path_img_inner:
+    if use_inner_image and path_img_inner:
         # inner image를 생성한다.
         img_inner = create_img_inner(
             path_img_inner=path_img_inner,
@@ -283,6 +301,7 @@ def process_button_create_qr_code_clicked():
 
 
 if __name__ == '__main__':
+
     # default user inputs
     dir_json = Path('json_user_inputs')
     dir_json.mkdir(exist_ok=True)
@@ -295,7 +314,6 @@ if __name__ == '__main__':
     else:
         user_inputs = st.session_state.user_inputs
         set_user_inputs(user_inputs)
-        
 
     st.title('QR 코드 명함 생성기')
     st.write('- 스마트폰에서 스캔하면 연락처 앱에 데이터가 자동으로 입력되는 QR 코드 명함 이미지를 만듭니다.')
@@ -306,7 +324,7 @@ if __name__ == '__main__':
 
 
     # 페이지 레이아웃
-    col_vcard, col_para, col_qr_code = st.columns([5, 2, 3])
+    col_vcard, col_para, col_qr_code = st.columns([4, 2, 3])
 
     # vcard 정보 입력
     with col_vcard:
@@ -340,6 +358,11 @@ if __name__ == '__main__':
             type_url_3 = st.text_input('URL 3 제목', type_url_3)
             url_3 = st.text_input('URL 3', url_3)
 
+        # 사용자가 지정한 url
+        with col_url_email[0].container(border=True):
+            type_url_4 = st.text_input('URL 4 제목', type_url_4)
+            url_4 = st.text_input('URL 4', url_4)
+
 
         # email of company
         with col_url_email[1].container(border=True):
@@ -356,31 +379,60 @@ if __name__ == '__main__':
             type_email_3 = st.text_input('이메일 3 제목', type_email_3)
             email_3 = st.text_input('이메일 3', email_3)
 
+        # 사용자가 지정한 email
+        with col_url_email[1].container(border=True):
+            type_email_4 = st.text_input('이메일 4 제목', type_email_4)
+            email_4 = st.text_input('이메일 4', email_4)
+
         # 전화번호
         col_tel = st.columns(2)
         tel_mobile = col_tel[0].text_input('모바일 전화번호', tel_mobile)
         tel_office = col_tel[1].text_input('사무실 전화번호', tel_office)
 
         # note
-        note = st.text_area('노트 (줄바꿈 없이 한 줄로 입력하세요.)', note, help='[주의] 줄바꿈을 하면 첫 줄만 QR 코드에 포함됩니다.')
+        note = st.text_area('노트 (줄바꿈 없이 한 줄로 입력하세요. 첫 줄만 표시됩니다.)', note)
 
         # vcard
-        vcard = f'''BEGIN:VCARD
-VERSION:3.0
-N:{name_family};{name_given};{name_middle};{name_prefix};{name_suffix}
-FN:{formatted_name}
-ORG:{company}
-URL;TYPE={type_url_1}:{url_1}
-URL;TYPE={type_url_2}:{url_2}
-URL;TYPE={type_url_3}:{url_3}
-EMAIL;TYPE={type_email_1}:{email_1}
-EMAIL;TYPE={type_email_2}:{email_2}
-EMAIL;TYPE={type_email_3}:{email_3}
-TEL;TYPE=mobile,pref:{tel_mobile}
-TEL;TYPE=office:{tel_office}
-NOTE:{note}
-END:VCARD'''
-    
+        vcard = f'BEGIN:VCARD\nVERSION:3.0'
+
+        if name_prefix or name_family or name_middle or name_given or name_suffix:
+            vcard += f'\nN:{name_family};{name_given};{name_middle};{name_prefix};{name_suffix}'
+        
+        if formatted_name:
+            vcard += f'\nFN:{formatted_name}'
+
+        if company:
+            vcard += f'\nORG:{company}'
+
+        if type_url_1 or url_1:
+            vcard += f'\nURL;TYPE={type_url_1}:{url_1}'
+        if type_url_2 or url_2:
+            vcard += f'\nURL;TYPE={type_url_2}:{url_2}'
+        if type_url_3 or url_3:
+            vcard += f'\nURL;TYPE={type_url_3}:{url_3}'
+        if type_url_4 or url_4:
+            vcard += f'\nURL;TYPE={type_url_4}:{url_4}'
+
+        if type_email_1 or email_1:
+            vcard += f'\nEMAIL;TYPE={type_email_1}:{email_1}'
+        if type_email_2 or email_2:
+            vcard += f'\nEMAIL;TYPE={type_email_2}:{email_2}'
+        if type_email_3 or email_3:
+            vcard += f'\nEMAIL;TYPE={type_email_3}:{email_3}'
+        if type_email_4 or email_4:
+            vcard += f'\nEMAIL;TYPE={type_email_4}:{email_4}'
+
+        if tel_mobile:
+            vcard += f'\nTEL;TYPE=mobile,pref:{tel_mobile}'
+
+        if tel_office:
+            vcard += f'\nTEL;TYPE=office:{tel_office}'
+
+        if note:
+            vcard += f'\nNOTE:{note}'
+
+        vcard += '\nEND:VCARD'
+
         vcard_text = st.text_area('vcard', vcard, height=400)
 
         col_download, col_upload = st.columns(2)
@@ -412,16 +464,33 @@ END:VCARD'''
     with col_para:
 
         # inner image
-        with st.container(border=False):
-            path_img_inner = st.file_uploader('QR 코드에 넣을 이미지', type=['png', 'jpg', 'jpeg'], key='inner_img')
+        use_inner_image = st.checkbox('Inner Image 사용', value=False)
+
+        if use_inner_image:
+            path_img_inner = st.file_uploader('QR 코드에 넣을 이미지', type=['png', 'jpg', 'jpeg'], key='inner_img', disabled=(not use_inner_image))
+
             if path_img_inner:
+                # st.text(f'이미지 파일 = {path_img_inner}')    
+
                 st.image(path_img_inner, width=100)
+                # st.image(path_img_inner)
 
                 img_inner = Image.open(path_img_inner)
 
                 width_img_inner, height_img_inner = img_inner.size
 
                 st.text(f'이미지 크기 = {width_img_inner} x {height_img_inner}')
+        else:
+            path_img_inner = None
+
+
+        if use_inner_image and (img_inner is not None):
+            with st.expander('이미지 사용법', expanded=(img_inner is not None)):
+                st.write('이미지는 오른쪽 아래에 위치합니다.')
+                st.write('마스크를 적용하면 원형으로 잘립니다.')
+                st.write('이미지 크기가 너무 크면 QR 코드가 읽히지 않을 수 있습니다.')
+
+
 
 
         with st.form('qr_code_para'):
