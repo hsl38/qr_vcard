@@ -517,38 +517,6 @@ if __name__ == '__main__':
 
 
 
-
-
-
-    # with col_vcard:
-    #     col_download, col_upload = st.columns(2)
-    #     with col_download:
-    #         # Save inputs button
-    #         user_inputs = get_user_inputs()
-    #         json_data = json.dumps(user_inputs, ensure_ascii=False, indent=4)
-    #         st.download_button(
-    #             label='다운로드 입력 데이터',
-    #             data=json_data,
-    #             file_name='user_inputs.json',
-    #             mime='application/json',
-    #         )
-    
-
-    #     with col_upload:
-    #         # user input json을 로드한다.
-    #         json_user_input = st.file_uploader('업로드 입력 데이터', type='json', key='json_user_input')
-    #         if json_user_input is not None:
-    #             user_inputs = json.load(json_user_input)
-
-    #             set_user_inputs(user_inputs)
-
-    #             placeholder_img_inner.image(path_img_inner, width=100)
-    #             st.session_state.user_inputs = user_inputs
-    #             # process_button_create_qr_code_clicked()
-    #             st.success('QR 코드 생성 버튼을 클릭하면 파일의 데이터가 적용됩니다.')
-
-
-
     # qr 코드 생성
     if button_create_qr_code_clicked:
         process_button_create_qr_code_clicked()

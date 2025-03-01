@@ -33,5 +33,6 @@
     "thickness_frame": 2,
     "apply_mask": true,
     "x_img_inner": 24,
-    "y_img_inner": 24
+    "y_img_inner": 24,
+    "path_img_inner": "img_inner/cat.png"
 }
