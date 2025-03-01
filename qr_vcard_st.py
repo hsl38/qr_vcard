@@ -505,7 +505,7 @@ if __name__ == '__main__':
             '입력 데이터 업로드', 
             type='json', 
             key='json_user_input',
-            help='전에 다운로드 받았던 입력 데이터 파일을 업로드하여 데이터를 입력할 수 있습니다.',
+            help='전에 다운로드 받았던 입력 데이터 파일을 업로드하여 데이터를 입력할 수 있습니다.'
         )
         if json_user_input is not None:
             user_inputs = json.load(json_user_input)
