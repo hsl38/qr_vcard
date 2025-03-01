@@ -268,7 +268,9 @@ def process_button_create_qr_code_clicked():
             file_name=f'{formatted_name}_{company}_{type_box}_{size_box}_{thickness_border_in_box}_{side_img_inner}_{thickness_frame}_{x_img_inner}_{y_img_inner}.png',
             mime='image/png',
             key='download_qr_img',
+            use_container_width=True,
         )
+
 
 
 if __name__ == '__main__':
@@ -503,7 +505,7 @@ if __name__ == '__main__':
             '입력 데이터 업로드', 
             type='json', 
             key='json_user_input',
-            help='전에 다운로드 받았던 입력 데이터 파일을 업로드하여 데이터를 입력할 수 있습니다.'
+            help='전에 다운로드 받았던 입력 데이터 파일을 업로드하여 데이터를 입력할 수 있습니다.',
         )
         if json_user_input is not None:
             user_inputs = json.load(json_user_input)
@@ -523,21 +525,11 @@ if __name__ == '__main__':
 
     # 자동 QR 코드 생성 (처음 실행할 때만)
     if first_run:
-        # Initialize default settings for QR code
-        # use_inner_image = True
-        # side_img_inner = 64
-        # thickness_frame = 2
-        # x_img_inner = 24
-        # y_img_inner = 24
-        # apply_mask = True
         path_img_inner = 'img_inner/cat.png'
         img_inner = Image.open(path_img_inner)
         st.session_state.img_inner = img_inner
         st.session_state.path_img_inner = path_img_inner
-        # placeholder_img_inner.image(path_img_inner, width=100)
-        
-        # Generate QR code on first run
-
 
         process_button_create_qr_code_clicked()
+
 
