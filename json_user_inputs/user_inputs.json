@@ -25,11 +25,9 @@
     "tel_mobile": "+82-10-5678-9012",
     "tel_office": "",
     "note": "환경, 에너지, 자동차, SDV, 통신, 사이버 보안, AI aided 코딩에 관심이 많습니다. QR 코드 명함으로 종이 명함 사용이 줄기를 바랍니다. ",
-
     "type_box": "vertical",
     "size_box": 4,
     "thickness_border_in_box": 4,
-
     "use_img_inner": true,
     "side_img_inner": 64,
     "thickness_frame": 2,
