@@ -1,5 +1,15 @@
 '''
 스마트폰에서 스캔하면 연락처에 데이터가 입려되는 QR 코드 명함 이미지를 만든다.
+
+- vcard 데이터를 입력하고 QR 코드를 생성한다.
+- QR 코드 이미지에 inner image를 넣을 수 있다.
+- QR 코드 이미지를 다운로드 받을 수 있다.
+- 입력한 데이터를 다운로드 받을 수 있다.
+- 입력한 데이터를 업로드하여 사용할 수 있다.
+
+r2.3 
+    vcard 데이터를 필요할 때만 볼 수 있도록 expander 안에 넣어 숨김
+    
 '''
 
 
@@ -15,7 +25,7 @@ from qrcode.image.styles.colormasks import RadialGradiantColorMask
 import io
 
 
-release_version = '2.2'
+release_version = '2.3'
 
 # 페이지 설정
 st.set_page_config(
@@ -220,6 +230,13 @@ def set_user_inputs(data):
 
 
 def process_button_create_qr_code_clicked():
+    global img_inner, path_img_inner
+    global formatted_name, name_prefix, name_family, name_middle, name_given, name_suffix, company
+    global type_url_1, url_1, type_url_2, url_2, type_url_3, url_3, type_url_4, url_4
+    global type_email_1, email_1, type_email_2, email_2, type_email_3, email_3, type_email_4, email_4
+    global tel_mobile, tel_office, note, vcard, vcard_text
+    global type_box, size_box, thickness_border_in_box
+    global use_img_inner, side_img_inner, thickness_frame, apply_mask, x_img_inner, y_img_inner 
 
     # qr 코드 이미지를 생성한다.
     img_qr_code = create_img_qr_code(
@@ -420,7 +437,12 @@ if __name__ == '__main__':
 
             vcard += '\nEND:VCARD'
 
-            vcard_text = st.text_area('vcard', vcard, height=400)
+            with col_vcard.expander('vcard', expanded=False):
+                vcard_text = st.text_area(
+                    'vcard', vcard, 
+                    height=400, 
+                    help='vcard 데이터를 수정합니다.'
+                )
 
     update_vcard_inputs()
 
@@ -436,18 +458,18 @@ if __name__ == '__main__':
 
         # path_img_inner_prev = path_img_inner
 
-        print(f'before: {path_img_inner = }')
+        # print(f'before: {path_img_inner = }')
         file_uploaded = st.file_uploader(
             '이미지 파일 업로드드', 
             type=['png', 'jpg', 'jpeg'], 
             key='inner_img', 
             disabled=(not use_img_inner)
         )
-        print(f'after: {type(path_img_inner) = }')
+        # print(f'after: {type(path_img_inner) = }')
 
         if file_uploaded is not None:
             placeholder_img_inner.image(file_uploaded, width=100)
-            print(f'image file_uploaded: {type(file_uploaded) = }')
+            # print(f'image file_uploaded: {type(file_uploaded) = }')
             img_inner = Image.open(file_uploaded)
             st.session_state.img_inner = img_inner
             st.session_state.path_img_inner = path_img_inner
@@ -498,7 +520,7 @@ if __name__ == '__main__':
             help='다음에 사용할 수 있도록 화면 왼쪽에 입력한 데이터를 다운로드 받습니다.',
             use_container_width=True,
         )
-        print(f'download user inputs: {path_img_inner = }')
+        # print(f'download user inputs: {path_img_inner = }')
 
 
         # user input json을 로드한다.
@@ -516,7 +538,7 @@ if __name__ == '__main__':
             st.session_state.img_inner = img_inner
 
             st.success('QR 코드 생성 버튼을 클릭하면 파일의 데이터가 적용됩니다.')
-            print(f'upload not None {user_inputs = }')
+            # print(f'upload not None {user_inputs = }')
 
 
 
